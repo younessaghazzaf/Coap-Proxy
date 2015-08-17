@@ -51,27 +51,32 @@ CoapClient client;
 			.setInt(NetworkConfig.Keys.MAX_MESSAGE_SIZE, 64)
 			.setInt(NetworkConfig.Keys.PREFERRED_BLOCK_SIZE, 64);
  	id=Get_Id_Param(param);
+System.out.println("coap://["+uri+"]:5683/chenillard/setv1?activate="+val);
  	switch(id){
  		case 1 : System.out.println("set t");
- 				envoie("coap://["+uri+"]:5683/chenillard/setv1?t="+val);
- 				client.post("non-empty", MediaTypeRegistry.TEXT_PLAIN);
- 				 break;
+ 			envoie("coap://["+uri+"]:5683/chenillard/setv1?t="+val);
+ 			break;
  		case 2: System.out.println("set n");
- 					break;
+			envoie("coap://["+uri+"]:5683/chenillard/setv1?n="+val);
+ 			break;
  		case 3: System.out.println("Reset");
- 					break;
+			envoie("coap://["+uri+"]:5683/chenillard/setv1?reset="+val);
+ 			break;
  		case 4: System.out.println("Activate (0/1)");
- 				envoie("coap://["+uri+"]:5683/chenillard/setv1?activate="+val);
- 				client.post("non-empty", MediaTypeRegistry.TEXT_PLAIN);
- 					break;
+			envoie("coap://["+uri+"]:5683/chenillard/setv1?active="+val);
+ 			break;
+		case 5: System.out.println("current id");
+			envoie("coap://["+uri+"]:5683/chenillard/setv1?current="+val);
+ 			break;
  	}
- 	return "Hey, This is Jersey JAX-RS !";
+
+ 	return "POST request sent to "+uri;
  }
 
  /*
 @Pre : Param name
 @Post : Id of Param ==>
-{t : 1  , n : 2 , Reset : 3 , Activate : 4}
+{t : 1  , n : 2 , Reset : 3 , Activate : 4 , current : 5}
 
  */
  private int Get_Id_Param(String param){
@@ -79,6 +84,7 @@ CoapClient client;
  		if(param.compareTo("n")==0) return 2;
  		if(param.compareTo("reset")==0) return 3;
  		if(param.compareTo("activate")==0) return 4;
+		if(param.compareTo("current")==0) return 5;
  		return 0;
  }
 
